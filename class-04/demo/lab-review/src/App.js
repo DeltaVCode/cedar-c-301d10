@@ -17,6 +17,11 @@ class App extends React.Component {
     };
   }
 
+  handleClose = () => {
+    console.log('Hiding modal');
+    this.setState({ showModal: false });
+  }
+
   render() {
     let theme = 'dark';
 
@@ -27,6 +32,7 @@ class App extends React.Component {
         <Footer theme={theme} />
         <SelectedBeast
           show={this.state.showModal}
+          handleClose={this.handleClose}
         />
       </div>
     );
