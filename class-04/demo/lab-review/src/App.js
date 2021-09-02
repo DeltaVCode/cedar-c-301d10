@@ -40,6 +40,7 @@ class App extends React.Component {
         />
         <Footer theme={theme} />
         <SelectedBeast
+          beast={this.state.selectedBeast}
           show={this.state.showModal}
           handleClose={this.handleClose}
         />
