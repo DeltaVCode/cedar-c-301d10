@@ -21,15 +21,21 @@ export default class Main extends React.Component {
     let hornCount = parseInt(event.target.elements.hornCount.value);
     console.log(hornCount);
 
-    this.setState({
-      filteredBeasts: this.props.beasts.filter(beast => {
-        if (hornCount === 0) {
-          return true; // include everything
-        }
+    this.filterBeasts(hornCount);
+  }
 
-        return beast.horns === hornCount;
-      })
-    })
+  filterBeasts = (hornCount) => {
+    // Start with our full list from props
+    let filteredBeasts = this.props.beasts;
+
+    if (hornCount > 0) {
+      filteredBeasts = filteredBeasts.filter(beast => beast.horns === hornCount);
+    }
+
+    this.setState({
+      // filteredBeasts: filteredBeasts // can combine since name/variable match
+      filteredBeasts,
+    });
   }
 
   render() {
