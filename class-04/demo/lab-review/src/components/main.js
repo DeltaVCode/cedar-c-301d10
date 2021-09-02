@@ -24,6 +24,13 @@ export default class Main extends React.Component {
     this.filterBeasts(hornCount);
   }
 
+  handleChange = event => {
+    let hornCount = parseInt(event.target.value);
+    console.log(hornCount);
+
+    this.filterBeasts(hornCount);
+  }
+
   filterBeasts = (hornCount) => {
     // Start with our full list from props
     let filteredBeasts = this.props.beasts;
@@ -47,7 +54,7 @@ export default class Main extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>How many horns?</Form.Label>
-            <Form.Control as="select" name="hornCount">
+            <Form.Control as="select" name="hornCount" onChange={this.handleChange}>
               <option value="0">All</option>
               <option value="1">One</option>
               <option value="2">Two</option>
