@@ -4,9 +4,14 @@ import Navbar from 'react-bootstrap/Navbar';
 
 class Header extends React.Component {
   render() {
+    let bg = 'dark';
+    if (this.props.theme === 'light') {
+      bg = 'secondary';
+    }
+
     return (
       <Container>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg={bg} variant={this.props.theme}>
           <Navbar.Brand>Gallery of Horns!</Navbar.Brand>
         </Navbar>
       </Container>
