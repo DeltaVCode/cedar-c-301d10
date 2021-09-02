@@ -10,6 +10,17 @@ export default class Main extends React.Component {
 
     return (
       <Container as="main">
+        <Form>
+          <Form.Group>
+            <Form.Label>How many horns?</Form.Label>
+            <Form.Control as="select">
+              <option value="">All</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </Form.Control>
+          </Form.Group>
+        </Form>
         <CardColumns>
           {beasts.map((beast, i) => (
             <HornedBeast
