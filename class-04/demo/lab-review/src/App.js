@@ -13,7 +13,9 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      showModal: true,
+      showModal: false,
+      //selectedBeast: {}, // option 1
+      selectedBeast: null,
     };
   }
 

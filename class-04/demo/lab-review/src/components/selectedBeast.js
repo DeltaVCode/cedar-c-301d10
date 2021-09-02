@@ -6,6 +6,12 @@ class SelectedBeast extends React.Component {
     const beast = this.props.beast;
     console.log(beast)
 
+    // If we have nothing to show, quit early and show nothing
+    // If we don't, beast.title is going to break
+    if (!beast) {
+      return null;
+    }
+
     return (
       <Modal show={this.props.show}
         onHide={this.props.handleClose}>
