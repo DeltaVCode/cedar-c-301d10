@@ -17,6 +17,13 @@ class App extends React.Component {
     };
   }
 
+  handleSelectBeast = beastIndex => {
+    this.setState({
+      selectedBeast: beastData[beastIndex],
+      showModal: true,
+    });
+  }
+
   handleClose = () => {
     console.log('Hiding modal');
     this.setState({ showModal: false });
@@ -28,7 +35,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header theme={theme} />
-        <Main beasts={beastData} />
+        <Main beasts={beastData}
+          handleSelectBeast={this.handleSelectBeast}
+        />
         <Footer theme={theme} />
         <SelectedBeast
           show={this.state.showModal}

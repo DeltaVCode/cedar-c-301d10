@@ -16,6 +16,10 @@ class HornedBeast extends React.Component {
     this.setState({ favorites: currentFavorites + 1 });
   }
 
+  showModal = () => {
+    this.props.displayModalForIndex(this.props.beastIndex);
+  }
+
   render() {
     return (
       <Card
@@ -23,6 +27,7 @@ class HornedBeast extends React.Component {
       >
         <Card.Body>
           <Card.Img variant="top" src={this.props.imageUrl}
+            onClick={this.showModal}
           />
           <Card.Title>{this.props.title}</Card.Title>
           <Card.Text>❤️ = {this.state.favorites}</Card.Text>

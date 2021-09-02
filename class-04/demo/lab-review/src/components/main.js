@@ -10,8 +10,11 @@ export default class Main extends React.Component {
 
     return (
       <CardColumns>
-        {beasts.map(beast => (
+        {beasts.map((beast, i) => (
           <HornedBeast
+            key={i}
+            beastIndex={i}
+            displayModalForIndex={this.props.handleSelectBeast}
             title={beast.title}
             imageUrl={beast.image_url}
             description={beast.description}
