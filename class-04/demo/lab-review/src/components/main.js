@@ -10,8 +10,11 @@ export default class Main extends React.Component {
 
     return (
       <CardColumns>
-        <HornedBeast title="Beasty" />
-        <HornedBeast title="Beauty" />
+        {beasts.map(beast => (
+          <HornedBeast
+            title={beast.title}
+          />
+        ))}
       </CardColumns>
     )
   }
