@@ -4,24 +4,39 @@ import { Button, CardColumns, Container, Form } from 'react-bootstrap';
 import HornedBeast from './hornedBeast'
 
 export default class Main extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      // Start with all beasts
+      filteredBeasts: this.props.beasts,
+    };
+  }
+
   handleSubmit = (event) => {
     // prevent actually submitting, just like in 201
     event.preventDefault();
 
-    console.log(event.target.elements.hornCount.value);
+    let hornCount = parseInt(event.target.elements.hornCount.value);
+    console.log(hornCount);
+    this.setState({
+      filteredBeasts: this.props.beasts.filter(beast => {
+        return beast.horns === hornCount;
+      })
+    })
   }
 
   render() {
-    let beasts = this.props.beasts;
+    let beasts = this.state.filteredBeasts;
     console.log(beasts);
 
     return (
-      <Container as="main">
+      <Container as="main" >
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>How many horns?</Form.Label>
             <Form.Control as="select" name="hornCount">
-              <option value="">All</option>
+              <option value="0">All</option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
