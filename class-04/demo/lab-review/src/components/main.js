@@ -13,6 +13,8 @@ export default class Main extends React.Component {
         {beasts.map(beast => (
           <HornedBeast
             title={beast.title}
+            imageUrl={beast.image_url}
+            description={beast.description}
           />
         ))}
       </CardColumns>
