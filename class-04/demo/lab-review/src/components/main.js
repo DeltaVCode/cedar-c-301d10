@@ -17,10 +17,16 @@ export default class Main extends React.Component {
     // prevent actually submitting, just like in 201
     event.preventDefault();
 
+    // pull values out of DOM input/select/etc
     let hornCount = parseInt(event.target.elements.hornCount.value);
     console.log(hornCount);
+
     this.setState({
       filteredBeasts: this.props.beasts.filter(beast => {
+        if (hornCount === 0) {
+          return true; // include everything
+        }
+
         return beast.horns === hornCount;
       })
     })
