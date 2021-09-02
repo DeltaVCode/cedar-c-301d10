@@ -1,6 +1,6 @@
 import React from 'react';
 // again, an inefficient import
-import { CardColumns, Form } from 'react-bootstrap';
+import { CardColumns, Container, Form } from 'react-bootstrap';
 import HornedBeast from './hornedBeast'
 
 export default class Main extends React.Component {
@@ -9,7 +9,7 @@ export default class Main extends React.Component {
     console.log(beasts);
 
     return (
-      <>
+      <Container as="main">
         <CardColumns>
           {beasts.map((beast, i) => (
             <HornedBeast
@@ -22,7 +22,7 @@ export default class Main extends React.Component {
             />
           ))}
         </CardColumns>
-      </>
+      </Container>
     )
   }
 }
