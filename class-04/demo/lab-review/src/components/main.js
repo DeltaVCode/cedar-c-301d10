@@ -8,8 +8,8 @@ export default class Main extends React.Component {
     super(props);
 
     this.state = {
-      // Start with all beasts
-      filteredBeasts: this.props.beasts,
+      // Start with no beasts; have to filter first
+      filteredBeasts: []
     };
   }
 
