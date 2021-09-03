@@ -1,4 +1,7 @@
 import React from 'react';
+import fakeLocation from '../fake-data/location.json';
+import Map from './map';
+import mapLink from '../fake-data/map.png';
 
 class Main extends React.Component {
   constructor(props) {
@@ -6,6 +9,8 @@ class Main extends React.Component {
 
     this.state = {
       search: null,
+      location: null,
+      mapSrc: null,
     };
   }
 
@@ -19,6 +24,8 @@ class Main extends React.Component {
     this.setState({
       // search: search,
       search,
+      location: fakeLocation,
+      // mapSrc: mapLink,
     });
   }
 
@@ -38,7 +45,11 @@ class Main extends React.Component {
 
         {this.state.search && /* if we have search, show div */
           <div>
-            Searched location is {this.state.search}
+            Searched location is {this.state.search}.
+            <Map
+              location={this.state.location}
+              src={this.state.mapSrc}
+            />
           </div>
         }
       </main>
