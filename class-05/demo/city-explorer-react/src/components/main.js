@@ -1,7 +1,9 @@
 import React from 'react';
 import fakeLocation from '../fake-data/location.json';
+import fakeRestaurants from '../fake-data/restaurants.json';
 import Map from './map';
 import mapLink from '../fake-data/map.png';
+import Restaurants from './restaurants';
 
 class Main extends React.Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Main extends React.Component {
       search: null,
       location: null,
       mapSrc: null,
+      restaurants: null,
     };
   }
 
@@ -25,7 +28,8 @@ class Main extends React.Component {
       // search: search,
       search,
       location: fakeLocation,
-      // mapSrc: mapLink,
+      mapSrc: mapLink,
+      restaurants: fakeRestaurants,
     });
   }
 
@@ -49,6 +53,10 @@ class Main extends React.Component {
             <Map
               location={this.state.location}
               src={this.state.mapSrc}
+            />
+            <Restaurants
+              location={this.state.location}
+              restaurants={this.state.restaurants}
             />
           </div>
         }
