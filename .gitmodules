@@ -1,0 +1,15 @@
+[submodule "class-01/demo/cr-301d10-dsa"]
+	path = class-01/demo/cr-301d10-dsa
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-dsa
+[submodule "class-02/demo/cr-301d10-dsa"]
+	path = class-02/demo/cr-301d10-dsa
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-dsa
+[submodule "class-02/demo/cr-301d10-demo2"]
+	path = class-02/demo/cr-301d10-demo2
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-demo2
+[submodule "class-03/demo/cr-301d10-dsa"]
+	path = class-03/demo/cr-301d10-dsa
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-dsa
+[submodule "class-03/demo/cr-301d10-demo2"]
+	path = class-03/demo/cr-301d10-demo2
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-demo2
