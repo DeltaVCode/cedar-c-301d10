@@ -36,9 +36,11 @@ class Main extends React.Component {
           </div>
         </form>
 
-        <div>
-          Searched location is {this.state.search}
-        </div>
+        {this.state.search && /* if we have search, show div */
+          <div>
+            Searched location is {this.state.search}
+          </div>
+        }
       </main>
     )
   }
