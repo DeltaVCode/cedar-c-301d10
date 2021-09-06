@@ -1,8 +1,8 @@
-# Code Challenge 05: Reduce
+# Code Challenge 11: Chaining Methods
 
 ## Overview
 
-Read [this overview.](README.md){:target="_blank"}
+There is no overview for today's challenges. Review the overviews from previous challenges, if needed.
 
 ## Video
 
@@ -10,16 +10,16 @@ Watch today's video from the [demo playlist.](https://www.youtube.com/playlist?l
 
 ## Demonstration
 
-Look through [these sample problems.](DEMO.md){:target="_blank"}
+There is no demonstration for today's challenges. Review the demos from previous challenges, if needed.
 
 ## Challenges
 
 1. Navigate to the `javascript` folder within your `data-structures-and-algorithms` repository.
-1. Create a new branch for today's challenge called `reduce`
-   - `git checkout -b reduce`
+1. Create a new branch for today's challenge called `chaining`
+   - `git checkout -b chaining`
 1. Retrieve the code challenge from the system
-   - `npm run get-challenge 05`
-1. In your terminal, from the `javascript` folder, run `npm test 05` to execute the tests in this file for **today's challenge.**
+   - `npm run get-challenge 11`
+1. In your terminal, from the `javascript` folder, run `npm test 11` to execute the tests in this file for **today's challenge.**
    - At this point you will see the failed tests scroll through your terminal window with a brief report of the number of failed tests at the bottom.
    - If you do not see this, verify your installation of Jest by typing `npx jest --version` in your terminal. Filename typos can make things break!
 1. Write code to make the tests pass, one at a time. Let the error messages guide you.

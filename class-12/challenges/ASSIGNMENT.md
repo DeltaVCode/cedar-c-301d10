@@ -1,25 +1,21 @@
-# Code Challenge 05: Reduce
+# Code Challenge 12: Regular Expressions, part 2
 
 ## Overview
 
-Read [this overview.](README.md){:target="_blank"}
+Continue to work on Regular Expression challenges.
 
 ## Video
 
 Watch today's video from the [demo playlist.](https://www.youtube.com/playlist?list=PLVngfM2hsbi-L6G8qlWd8RyRbuTamHt3k){:target="_blank"}
 
-## Demonstration
-
-Look through [these sample problems.](DEMO.md){:target="_blank"}
-
 ## Challenges
 
 1. Navigate to the `javascript` folder within your `data-structures-and-algorithms` repository.
-1. Create a new branch for today's challenge called `reduce`
-   - `git checkout -b reduce`
+1. Create a new branch for today's challenge called `regex-2`
+   - `git checkout -b regex-2`
 1. Retrieve the code challenge from the system
-   - `npm run get-challenge 05`
-1. In your terminal, from the `javascript` folder, run `npm test 05` to execute the tests in this file for **today's challenge.**
+   - `npm run get-challenge 12`
+1. In your terminal, from the `javascript` folder, run `npm test 12` to execute the tests in this file for **today's challenge.**
    - At this point you will see the failed tests scroll through your terminal window with a brief report of the number of failed tests at the bottom.
    - If you do not see this, verify your installation of Jest by typing `npx jest --version` in your terminal. Filename typos can make things break!
 1. Write code to make the tests pass, one at a time. Let the error messages guide you.
