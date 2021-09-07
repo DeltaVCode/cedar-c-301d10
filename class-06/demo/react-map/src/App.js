@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import './App.css';
 
@@ -19,6 +20,10 @@ class App extends React.Component {
 
     // assign q in state to be value of q
     this.setState({ q });
+
+    const url = `https://us1.locationiq.com/v1/search.php?key=pk.3d3f151dd32b59aabcf52d7231919bb3&q=415 12th Ave SE, Cedar Rapids&format=json`;
+    const response = axios.get(url);
+    console.log(response);
   };
 
   render() {
