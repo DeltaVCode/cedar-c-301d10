@@ -2,6 +2,12 @@ import React from 'react';
 import './App.css';
 
 class App extends React.Component {
+  // instead of constructor/super
+  // assign initial state as class property
+  state = {
+    q: null,
+  };
+
   handleSearch = event => {
     // avoid making new GET request
     event.preventDefault();
@@ -10,6 +16,9 @@ class App extends React.Component {
     let input = form.elements.search;
     let q = input.value;
     console.log(q);
+
+    // assign q in state to be value of q
+    this.setState({ q });
   };
 
   render() {
@@ -25,6 +34,10 @@ class App extends React.Component {
             <button type="submit">Search</button>
           </div>
         </form>
+
+        {this.state.q &&
+          <h2>Search: {this.state.q}</h2>
+        }
       </div>
     );
   }
