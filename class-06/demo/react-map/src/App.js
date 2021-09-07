@@ -22,10 +22,17 @@ class App extends React.Component {
     // assign q in state to be value of q
     this.setState({ q, location: null });
 
-    const url = `https://us1.locationiq.com/v1/search.php?key=pk.3d3f151dd32b59aabcf52d7231919bb3&q=415 12th Ave SE, Cedar Rapids&format=json`;
+    const url = `https://us1.locationiq.com/v1/search.php`;
 
     // without await, response would be a Promise of future data
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      // query string parameters
+      params: {
+        key: 'pk.3d3f151dd32b59aabcf52d7231919bb3',
+        q, // variable already has correct name
+        format: 'json',
+      }
+    });
     console.log(response);
 
     const location = response.data[0];
