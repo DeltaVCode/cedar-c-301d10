@@ -7,9 +7,10 @@ class App extends React.Component {
   // assign initial state as class property
   state = {
     q: null,
+    location: null,
   };
 
-  handleSearch = event => {
+  handleSearch = async event => {
     // avoid making new GET request
     event.preventDefault();
 
@@ -19,11 +20,16 @@ class App extends React.Component {
     console.log(q);
 
     // assign q in state to be value of q
-    this.setState({ q });
+    this.setState({ q, location: null });
 
     const url = `https://us1.locationiq.com/v1/search.php?key=pk.3d3f151dd32b59aabcf52d7231919bb3&q=415 12th Ave SE, Cedar Rapids&format=json`;
-    const response = axios.get(url);
+
+    // without await, response would be a Promise of future data
+    const response = await axios.get(url);
     console.log(response);
+
+    const location = response.data[0];
+    this.setState({ location });
   };
 
   render() {
@@ -41,7 +47,13 @@ class App extends React.Component {
         </form>
 
         {this.state.q &&
-          <h2>Search: {this.state.q}</h2>
+          <>
+            <h2>Search: {this.state.q}</h2>
+            {this.state.location ?
+              <p>Display Name: {this.state.location.display_name}</p>
+              : <p>Loading...</p>
+            }
+          </>
         }
       </div>
     );
