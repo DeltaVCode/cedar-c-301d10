@@ -28,7 +28,8 @@ class App extends React.Component {
     const response = await axios.get(url, {
       // query string parameters
       params: {
-        key: 'pk.3d3f151dd32b59aabcf52d7231919bb3',
+        // get key from environment variables
+        key: process.env.REACT_APP_LOCATION_KEY,
         q, // variable already has correct name
         format: 'json',
       }
