@@ -47,6 +47,10 @@ class App extends React.Component {
   getShoppingList = async () => {
     let response = await axios.get(`${apiUrl}/shoppingList`);
     console.log(response);
+
+    this.setState({
+      shoppingList: response.data,
+    });
   }
 
   render() {
@@ -62,6 +66,18 @@ class App extends React.Component {
             <button type="submit">Search</button>
           </div>
         </form>
+
+        {this.state.shoppingList &&
+          <ul>
+            {this.state.shoppingList.map(
+              (shoppingListItem, index) => (
+                <li key={index}>
+                  {shoppingListItem}
+                </li>
+              )
+            )}
+          </ul>
+        }
 
         {this.state.q &&
           <>
