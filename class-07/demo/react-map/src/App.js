@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import './App.css';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 class App extends React.Component {
   // instead of constructor/super
   // assign initial state as class property
@@ -38,7 +40,18 @@ class App extends React.Component {
 
     const location = response.data[0];
     this.setState({ location });
+
+    this.getShoppingList();
   };
+
+  getShoppingList = async () => {
+    let response = await axios.get(`${apiUrl}/shoppingList`);
+    console.log(response);
+
+    this.setState({
+      shoppingList: response.data,
+    });
+  }
 
   render() {
     return (
@@ -53,6 +66,18 @@ class App extends React.Component {
             <button type="submit">Search</button>
           </div>
         </form>
+
+        {this.state.shoppingList &&
+          <ul>
+            {this.state.shoppingList.map(
+              (shoppingListItem, index) => (
+                <li key={index}>
+                  {shoppingListItem}
+                </li>
+              )
+            )}
+          </ul>
+        }
 
         {this.state.q &&
           <>
