@@ -16,3 +16,9 @@
 [submodule "class-05/cr301d10-portfolio"]
 	path = class-05/cr301d10-portfolio
 	url = https://github.com/DeltaVCode-Demo/cr301d10-portfolio
+[submodule "class-08/cr-301d10-express"]
+	path = class-08/cr-301d10-express
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-express
+[submodule "class-08/cr-301d10-react"]
+	path = class-08/cr-301d10-react
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-react
