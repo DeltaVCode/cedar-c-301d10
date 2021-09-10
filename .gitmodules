@@ -22,3 +22,9 @@
 [submodule "class-08/cr-301d10-react"]
 	path = class-08/demo/react-map
 	url = https://github.com/DeltaVCode-Demo/cr-301d10-react
+[submodule "class-09/demo/express"]
+	path = class-09/demo/express
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-express
+[submodule "class-09/demo/react-app"]
+	path = class-09/demo/react-app
+	url = https://github.com/DeltaVCode-Demo/cr-301d10-react
