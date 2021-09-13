@@ -6,9 +6,27 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import axios from 'axios';
 
 class App extends React.Component {
   state = { cats: [] };
+
+  // Run fetch as soon as the component has loaded
+  componentDidMount() {
+    this.fetchCats();
+  }
+
+  async fetchCats() {
+    let apiUrl = `${process.env.REACT_APP_SERVER}/cats`;
+    try {
+      // TODO: filter by location!
+      let results = await axios.get(apiUrl);
+      this.setState({ cats: results.data });
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
 
   render() {
     return (
