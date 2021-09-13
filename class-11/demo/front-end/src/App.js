@@ -53,6 +53,12 @@ class App extends React.Component {
               <h1>About Page Here</h1>
               <p>I am Keith</p>
             </Route>
+            <Route path="/help">
+              <h1>Help me!</h1>
+            </Route>
+            <Route>
+              <h1>Not Found!</h1>
+            </Route>
           </Switch>
         </Router>
       </>
