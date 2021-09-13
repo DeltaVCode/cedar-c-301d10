@@ -19,7 +19,11 @@ const cors = require('cors');
 app.use(cors());
 
 // Route handlers
+app.get('/cats', async (req, res) => {
+  const cats = await Cat.find();
 
+  res.send(cats);
+})
 
 // Start server
 const PORT = process.env.PORT;
