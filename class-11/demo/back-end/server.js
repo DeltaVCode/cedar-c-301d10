@@ -10,6 +10,9 @@ db.once('open', function () {
 
 mongoose.connect(process.env.MONGODB_URL);
 
+// Import our Mongoose model
+const Cat = require('./models/cat');
+
 const app = express();
 
 const cors = require('cors');
