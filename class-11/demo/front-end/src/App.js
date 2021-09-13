@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 class App extends React.Component {
+  state = { cats: [] };
+
   render() {
     return (
       <>
@@ -20,6 +22,14 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <h1>Home</h1>
+              {this.state.cats.length > 0 &&
+                <>
+                  <h2>Cats!</h2>
+                  {this.state.cats.map(cat => (
+                    <p key={cat._id}>{cat.name}</p>
+                  ))}
+                </>
+              }
             </Route>
             <Route path="/about">
               <h1>About Page Here</h1>
