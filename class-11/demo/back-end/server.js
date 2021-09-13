@@ -20,7 +20,14 @@ app.use(cors());
 
 // Route handlers
 app.get('/cats', async (req, res) => {
-  const cats = await Cat.find();
+  const location = req.query.location;
+
+  const findQuery = {};
+  // Only if the query includes location, add location to our filter
+  if (location) {
+    findQuery.location = location;
+  }
+  const cats = await Cat.find(findQuery);
 
   res.send(cats);
 })
