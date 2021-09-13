@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Link,
 } from "react-router-dom";
 
 class App extends React.Component {
@@ -13,8 +14,8 @@ class App extends React.Component {
         <Router>
           <nav>
             <h1>World of Cats</h1>
-            <a href="/">Home</a>
-            <a href="/about">About</a>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
           </nav>
           <Switch>
             <Route exact path="/">
@@ -22,6 +23,7 @@ class App extends React.Component {
             </Route>
             <Route path="/about">
               <h1>About Page Here</h1>
+              <p>I am Keith</p>
             </Route>
           </Switch>
         </Router>
