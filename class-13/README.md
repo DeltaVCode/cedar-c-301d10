@@ -1,146 +1,141 @@
-# Creating and Deleting Resources
+# Updating Resources
 
 ## Overview
 
-Today we will focus on the `C` and the `D` of the `CRUD`:`CREATE` and `DELETE`. We will discuss how to send a POST request and save that information in a Mongo database and a DELETE request to remove information from the database.
+Today is the final buildout of the book collection app. Our final step is to implement the ability to update records that exist in our database.
+
+Also, the Code 301 final exam will become available today and is due at the end of lab time. This exam also serves as the Code 401 entrance exam. However, it is a pass/fail graded portion of this course, regardless of your intent to advance to a Code 401 course.
+
+The exam is open book, open Google, open Stack Overflow, whatever resources you want to use, but it must be completed individually. You may not get help from anyone else, except from your instructor. The exam is designed to cover the full range of what was taught in this course. The intent is to measure not your memorization skills, but your resourcefulness and your ability to adapt and problem-solve. Give yourself adequate time for the exam.
+
 
 ## Daily Plan
 
 - Warm-up exercise
 - Review code challenges
-- Introduction of today's code challenge topic
 - Code review of lab assignment
-- Creating a resource
-- Code Demo
-- Lab Preview
+- Updating Resources
+- Code demo
+- Lab preview
+- Exam prep
 
 ## Learning Objectives
 
-As a result of completing lecture 13 of Code 301, students will:
+As a result of completing lecture 14 of Code 301, students will:
 
 - Describe and Define 
-  - POST
-  - DELETE
-  - params
-  - request.body
-  - middleware
-- Be able to send a post request from the front end to a server
-- Be able to instantly undate the results and have those results persist on reload
-- Be able to send a delete request from the front end to the server
-- Understand the need for a body parser
+  - UPDATE
+  - PUT
+  - Diversity and Inclusion
+- Be able to update a resources in a mongo database
+- Be able to update a resource instantly in a React application and have that resource state persist on reload
 
 ## Notes
 
-1. What does the C and D stand for in CRUD?
+1. Why do we need to talk about Diversity and Inclusion?
 
 
-1. What are three ways to send information from the front-end to the back-end?
+1. What does the U stand for in CRUD?
 
 
-1. Of the three ways to send information, which two are send in the URL?
+1. How do we find a record by id and update it in Mongoose?
 
 
-1. How to send information from the front-end to the back-end using Axios:
-  **QUERY**
+1. Sending an axios request to update a record:
   ```javaScript
-  const randomString = 'info that I want to send to the server';
   const SERVER = 'http://localhost:3001';
+  // id of the record to update
+  const id = 2; 
+  // the entire record with the updated information
+  const updatedRecord = {name: 'bobby', age: 105}; 
 
-  axios.get(`${SERVER}`, { params, { data: randomString }})
+  axios.put(`${SERVER}/${id}`, { recordToUpdate: updatedRecord });
   ```
-  - queries look like this: `http://localhost:3000/?city=seattle`
-  - they come after the question mark
-  - they are made up of key/value pairs separated by an equal sign
-  - you can have multiple queries: `http://localhost:3000/?city=seattle&state=wa`
-  - sent on the request.query
-    - this will be the `request.query.data`
 
-------------------------
-**PARAMS**
-```javaScript
-const id = 12;
-const SERVER = 'http://localhost:3001`;
-
-// this will get a single record because we are doing an app.get with an id
-axios.get(`${SERVER}/${id}`)
-
-// this will delete a single record because we are doing an app.delete with an id
-axios.delete(`${SERVER}/${id}`})
-```
-- params look like this: `http://localhost:3000/12`
-- they come before any queries
-- the server defines what the key is for the params like this: `app.get('/someRoute/:id', callBack)`
-  - That `:id` can be called anything - it is a variable (ie `app.get('/someRoute/:banana', callback)`)
-- The value of the params is what comes in in the URL in that position. So, in this case, the key is `id` and the value is `12`. 
-- sent on the request.params
-  - this will be `request.params.id`
-
---------------------------
-**BODY**
-```javaScript
-const newRecord = {
-  name: 'bob',
-  age: 104
-}
-const SERVER = 'http://localhost:3001';
-
-// this will create a new record because that is what POST does
-axios.post(`${SERVER}`, { data: newRecord });
-```
-- sent on the request.body
-- will need to parse the body on server in order to be able to read this information. You do this by adding this line of code to your server: `app.use(express.json());`
-  - Without this line of code, the request.body will come in as undefined
-
-1. Server Routes
-  **CREATE**
+1. Updating a record server side:
   ```javaScript
-  app.post('/someRoute', callback);
+  app.put('/someRoute/:id', callback);
 
   callback(request, response) {
-    // gets information from the BODY of the request object
-    const newRecord = request.body.newRecord
+    const record = request.body.recordToUpdate;
+    const id = request.query.params.id;
 
-    // create a record and save
-    const bob = new Model(name: request.body.newRecord.name, age: request.body.newRecord.age);
-    bob.save()
+    Model.findOneAndUpdate(id, record);
   }
   ```
 
-  **DELETE**
+1. Updating a record server side when the record is nested inside of a user object (like the books in the user)
   ```javaScript
-  app.delete('/someRoute/:id', callback);
+  app.put('/someRoute/:index', callback);
 
   callback(request, response) {
-    // get the id of the record to delete from the params
-    const id = request.params.id;
+    const email = request.body.email; // send the email in the body as well as the record
+    const record = request.body.recordToUpdate;
+    const index = request.query.params.index;
 
-    // find that record and delete
-    Model.findOneAndDelete(id);
-  }
-  ```
-  - if we need to find a user first and then delete a book ...
-
-  ```javaScript
-  app.delete('/someRoute/:index', callback);
-
-  callback(request, response) {
-    // get the index of the book
-    const index = request.params.index;
-    // get the email from the query (need to make sure we send it in the front-end)
-    const email = request.query.email;
-
-    // find the user by email
     Model.findOne({ email }, (err, person) => {
       if(err) console.error(err);
-      // now that we found the user, delete the book using the index
-      const newBookArray = person.books.splice(index, 1);
-      // assign the new book Array to the user
-      person.books = newBookArray;
-      // save it
-      person.save();
+      // now that we have the user, we need to replace the record
+      const newBooks = person.books.splice(index, 1, record);
+      // replace the books array with the new books array
+      person.books = newBooks;
+      // save the updated person in the DB
+      person.save()
     })
   }
   ```
+1. Deploying Mongo to Heroku!  
 
-  1. Where can I find more information?
-  [mongoose queries](https://mongoosejs.com/docs/api.html#model_Model.findOneAndDelete)
+### Hosted Mongo Databases: Atlas
+
+While you can run Mongo on your own machines, it's quite common to run an instance of Mongo in the cloud so that you can take advantage of better hardware, more memory and higher speed networks. Mongo offers a hosted cloud database service called "Atlas" ... once you've got this setup, it's easy to connect your API servers from anywhere in the world to use it.
+
+1. Sign Up
+1. Setup the organization
+   - Name your organization and project
+   - These can be whatever you want to call them
+   - Set Preferred Language (Javascript)
+1. Pick the "Free" (Shared Cluster) option
+1. Create Cluster
+   - Choose AWS
+   - Choose the closest region to your location (i.e. Oregon)
+1. Create a DB User
+   - Click the "Database Access" link
+   - Add a new user
+     - Choose Password Authentication
+     - Choose a username and password
+     - For access rights, choose "Atlas Admin"
+1. Enable Network Access
+   - Click Network Access Button
+   - Click "Add IP Address"
+   - Choose the "Allow Access from Anywhere" option
+   - Click "Confirm"
+1. Get your connection string
+   - Click "Clusters" button on the left
+   - Click on the "Connect" button on the cluster screen
+   - To connect to your new database with the command line:
+     - Choose the "Connect with Mongo Shell" option
+     - Copy out the connection string
+     - This will look something like this:
+     - `mongo "mongodb+srv://cluster0.xtrut.mongodb.net/<dbname>" --username dba`
+     - Replace `<dbname>` with the name of the database you want to use for your application, for example 'people'
+   - To connect your Node or Express application:
+     - Choose the "Connect your Application" option
+     - This will look something like this:
+     - `mongodb+srv://dba:<password>@cluster0.xtrut.mongodb.net/<dbname>?retryWrites=true&w=majority`
+     - Replace `<password>` with the password you created earlier
+     - Replace `<dbname>` with the name of the database you want to use for your application, for example 'people'
+     - Use this as  `MONGODB_URI` in your .env file or at Heroku when you deploy
+
+![Account Setup](assets/atlas-setup.png)
+
+![Choose Plan](assets/atlas-choose-plan.png)
+
+![Cluster](assets/atlas-cluster-screen.png)
+
+![Network Options](assets/atlas-network.png)
+
+![Connect](assets/atlas-connect-options.png)
+
+![Heroku Setup](assets/heroku-mongo.png)
+
