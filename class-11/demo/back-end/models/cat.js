@@ -7,6 +7,7 @@ const catSchema = new Schema({
   color: String,
   hasClaws: Boolean,
   location: String,
+  lives: Number,
 });
 
 const Cat = mongoose.model('Cat', catSchema);
