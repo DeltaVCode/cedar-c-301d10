@@ -42,9 +42,20 @@ if (!parseInt(PORT)) throw 'Invalid PORT';
 
 app.listen(PORT, () => console.log(`Listening at http://localhost:${PORT}`));
 
-function postCats(req, res) {
+async function postCats(req, res) {
   console.log('headers', req.headers);
   console.log('body', req.body);
 
-  res.send('meow');
+  try {
+    const newCat = await Cat.create(req.body);
+    res.send(newCat);
+  } catch (err) {
+    handleError(err, res);
+  }
+}
+
+// TODO: move to a module
+function handleError(err, res) {
+  console.error(err);
+  res.status(500).send('oops!');
 }
