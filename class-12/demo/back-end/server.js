@@ -32,8 +32,17 @@ app.get('/cats', async (req, res) => {
   res.send(cats);
 })
 
+app.post('/cats', postCats);
+
 // Start server
 const PORT = process.env.PORT;
 if (!parseInt(PORT)) throw 'Invalid PORT';
 
 app.listen(PORT, () => console.log(`Listening at http://localhost:${PORT}`));
+
+function postCats(req, res) {
+  console.log('headers', req.headers);
+  console.log('body', req.body);
+
+  res.send('meow');
+}
