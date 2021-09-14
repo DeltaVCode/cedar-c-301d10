@@ -7,6 +7,7 @@ import {
   Link,
 } from "react-router-dom";
 import axios from 'axios';
+import CreateCat from './CreateCat';
 
 class App extends React.Component {
   state = { cats: [] };
@@ -40,6 +41,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <h1>Home</h1>
+              <CreateCat />
               {this.state.cats.length > 0 &&
                 <>
                   <h2>Cats!</h2>
