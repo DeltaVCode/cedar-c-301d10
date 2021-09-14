@@ -36,6 +36,15 @@ class App extends React.Component {
     let results = await axios.post(apiUrl, catInfo);
     let newCat = results.data;
     console.log(newCat);
+
+    // Option 1: update state to include our new cat
+    this.setState({
+      // cats: this.state.cats.concat(newCat)
+      cats: [newCat, ...this.state.cats]
+    })
+
+    // Option 2: just get them all again!
+    this.fetchCats();
   }
 
   render() {
