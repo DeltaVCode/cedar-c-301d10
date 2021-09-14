@@ -9,6 +9,8 @@ import {
 import axios from 'axios';
 import CreateCat from './CreateCat';
 
+const SERVER = process.env.REACT_APP_SERVER;
+
 class App extends React.Component {
   state = { cats: [] };
 
@@ -18,7 +20,7 @@ class App extends React.Component {
   }
 
   async fetchCats() {
-    let apiUrl = `${process.env.REACT_APP_SERVER}/cats`;
+    let apiUrl = `${SERVER}/cats`;
     try {
       // TODO: filter by location!
       let results = await axios.get(apiUrl);
@@ -27,6 +29,13 @@ class App extends React.Component {
     catch (err) {
       console.log(err);
     }
+  }
+
+  handleSave = async catInfo => {
+    let apiUrl = `${SERVER}/cats`;
+    let results = await axios.post(apiUrl, catInfo);
+    let newCat = results.data;
+    console.log(newCat);
   }
 
   render() {
@@ -41,7 +50,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <h1>Home</h1>
-              <CreateCat />
+              <CreateCat onSave={this.handleSave} />
               {this.state.cats.length > 0 &&
                 <>
                   <h2>Cats!</h2>
