@@ -7,6 +7,7 @@ import {
   Link,
 } from "react-router-dom";
 import axios from 'axios';
+import Cat from './Cat';
 import CreateCat from './CreateCat';
 
 const SERVER = process.env.REACT_APP_SERVER;
@@ -64,7 +65,10 @@ class App extends React.Component {
                 <>
                   <h2>Cats!</h2>
                   {this.state.cats.map(cat => (
-                    <p key={cat._id}>{cat.name}</p>
+                    <Cat
+                      key={cat._id}
+                      cat={cat}
+                    />
                   ))}
                 </>
               }
