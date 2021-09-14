@@ -17,6 +17,8 @@ const app = express();
 
 const cors = require('cors');
 app.use(cors());
+// Handle request body with JSON
+app.use(express.json());
 
 // Route handlers
 app.get('/cats', async (req, res) => {
@@ -32,8 +34,43 @@ app.get('/cats', async (req, res) => {
   res.send(cats);
 })
 
+app.post('/cats', postCats);
+// id = parameter
+app.delete('/cats/:id', deleteCat)
+
 // Start server
 const PORT = process.env.PORT;
 if (!parseInt(PORT)) throw 'Invalid PORT';
 
 app.listen(PORT, () => console.log(`Listening at http://localhost:${PORT}`));
+
+async function postCats(req, res) {
+  console.log('headers', req.headers);
+  console.log('body', req.body);
+
+  try {
+    const newCat = await Cat.create(req.body);
+    res.send(newCat);
+  } catch (err) {
+    handleError(err, res);
+  }
+}
+
+async function deleteCat(req, res) {
+  // value from route /cats/:id
+  let id = req.params.id;
+
+  try {
+    await Cat.findByIdAndDelete(id);
+    res.status(204).send();
+  }
+  catch (err) {
+    handleError(err, res);
+  }
+}
+
+// TODO: move to a module
+function handleError(err, res) {
+  console.error(err);
+  res.status(500).send('oops!');
+}
