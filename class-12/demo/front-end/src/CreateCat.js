@@ -12,6 +12,9 @@ export default class CreateCat extends React.Component {
     console.log('saving', formData);
 
     this.props.onSave(formData);
+    // reset the form
+    event.target.reset();
+    elements.name.focus();
   }
 
   render() {
