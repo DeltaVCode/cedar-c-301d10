@@ -35,6 +35,8 @@ app.get('/cats', async (req, res) => {
 })
 
 app.post('/cats', postCats);
+// id = parameter
+app.delete('/cats/:id', deleteCat)
 
 // Start server
 const PORT = process.env.PORT;
@@ -50,6 +52,19 @@ async function postCats(req, res) {
     const newCat = await Cat.create(req.body);
     res.send(newCat);
   } catch (err) {
+    handleError(err, res);
+  }
+}
+
+async function deleteCat(req, res) {
+  // value from route /cats/:id
+  let id = req.params.id;
+
+  try {
+    await Cat.findByIdAndDelete(id);
+    res.status(204).send();
+  }
+  catch (err) {
     handleError(err, res);
   }
 }
