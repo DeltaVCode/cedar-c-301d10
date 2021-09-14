@@ -48,6 +48,23 @@ class App extends React.Component {
     this.fetchCats();
   }
 
+  handleDelete = async catId => {
+    let apiUrl = `${SERVER}/cats/${catId}`;
+    await axios.delete(apiUrl);
+
+    // Option 1: get them all again
+    // this.fetchCats();
+
+    // Option 2: remove the given Cat from state
+    // If you pass setState a function,
+    // that function receives the current state.
+    // More complex, but more technically correct than this.state.
+    this.setState(state => ({
+      // Filter out the deleted cat
+      cats: state.cats.filter(cat => cat._id !== catId)
+    }));
+  }
+
   render() {
     return (
       <>
@@ -68,6 +85,7 @@ class App extends React.Component {
                     <Cat
                       key={cat._id}
                       cat={cat}
+                      onDelete={this.handleDelete}
                     />
                   ))}
                 </>
