@@ -17,6 +17,8 @@ const app = express();
 
 const cors = require('cors');
 app.use(cors());
+// Handle request body with JSON
+app.use(express.json());
 
 // Route handlers
 app.get('/cats', async (req, res) => {
