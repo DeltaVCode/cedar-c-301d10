@@ -37,6 +37,7 @@ app.get('/cats', async (req, res) => {
 app.post('/cats', postCats);
 // id = parameter
 app.delete('/cats/:id', deleteCat)
+app.put('/cats/:id', putCat)
 
 // Start server
 const PORT = process.env.PORT;
@@ -51,6 +52,25 @@ async function postCats(req, res) {
   try {
     const newCat = await Cat.create(req.body);
     res.send(newCat);
+  } catch (err) {
+    handleError(err, res);
+  }
+}
+
+async function putCat(req, res) {
+  // value from route /cats/:id
+  let id = req.params.id;
+  let catUpdate = req.body;
+
+  // mongoose update options
+  let options = {
+    new: true, // return the updated Cat, not the old version
+    overwrite: true, // replace the whole Cat, instead of "patching"
+  }
+
+  try {
+    let updatedCat = await Cat.findByIdAndUpdate(id, catUpdate, options);
+    res.send(updatedCat);
   } catch (err) {
     handleError(err, res);
   }

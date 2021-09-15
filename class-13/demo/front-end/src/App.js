@@ -48,6 +48,16 @@ class App extends React.Component {
     this.fetchCats();
   }
 
+  handleUpdate = async (catId, catInfo) => {
+    let apiUrl = `${SERVER}/cats/${catId}`;
+    await axios.put(apiUrl, catInfo);
+
+    // Option 1: figure out how to put update into state
+
+    // Option 2: just get them all again!
+    await this.fetchCats();
+  }
+
   handleDelete = async catId => {
     let apiUrl = `${SERVER}/cats/${catId}`;
     await axios.delete(apiUrl);
@@ -86,6 +96,7 @@ class App extends React.Component {
                       key={cat._id}
                       cat={cat}
                       onDelete={this.handleDelete}
+                      onUpdate={this.handleUpdate}
                     />
                   ))}
                 </>
