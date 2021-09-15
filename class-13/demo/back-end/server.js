@@ -59,12 +59,24 @@ async function postCats(req, res) {
 
 async function putCat(req, res) {
   // value from route /cats/:id
-  let id = req.params.id;
-  let catUpdate = req.body;
+  // let id = req.params.id;
+  // Use destructing
+  let { id } = req.params;
+
+  // Fine for now, or if we can always trust our users
+  // let catUpdate = req.body;
+
+  // Prevent over-POSTing attack that changes hasClaws
+  // Destructuring - pull three properties out of body into variables
+  let { title, color, location } = req.body;
+
+  // Only update with these fields
+  let catUpdate = { title, color, location };
 
   // mongoose update options
   let options = {
     new: true, // return the updated Cat, not the old version
+    // Might cause problems with over-posting prevention?
     overwrite: true, // replace the whole Cat, instead of "patching"
   }
 
