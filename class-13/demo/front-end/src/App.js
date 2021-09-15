@@ -55,7 +55,7 @@ class App extends React.Component {
     // Option 1: figure out how to put update into state
 
     // Option 2: just get them all again!
-    this.fetchCats();
+    await this.fetchCats();
   }
 
   handleDelete = async catId => {
