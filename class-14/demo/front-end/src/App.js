@@ -16,7 +16,16 @@ import LogoutButton from './LogoutButton';
 const SERVER = process.env.REACT_APP_SERVER;
 
 class App extends React.Component {
-  state = { cats: null };
+  state = {
+    cats: null,
+    showAddCat: false,
+  };
+
+  toggleShowAddCat = () => {
+    this.setState({
+      showAddCat: !this.state.showAddCat,
+    });
+  }
 
   // Run fetch when component updates (e.g. from auth)
   // instead of componentDidMount
@@ -124,7 +133,16 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <h1>Home</h1>
-              <CreateCat onSave={this.handleSave} />
+              {!this.state.showAddCat &&
+                <button onClick={this.toggleShowAddCat}>
+                  Add Cat!
+                </button>
+              }
+              <CreateCat
+                show={this.state.showAddCat}
+                onCancel={this.toggleShowAddCat}
+                onSave={this.handleSave}
+              />
               {this.state.cats && this.state.cats.length > 0 &&
                 <>
                   <h2>Cats!</h2>
