@@ -9,22 +9,53 @@ import {
 import axios from 'axios';
 import Cat from './Cat';
 import CreateCat from './CreateCat';
+import LoginButton from './LoginButton';
+import { withAuth0 } from '@auth0/auth0-react';
+import LogoutButton from './LogoutButton';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
 class App extends React.Component {
-  state = { cats: [] };
+  state = {
+    cats: null,
+    showAddCat: false,
+  };
 
-  // Run fetch as soon as the component has loaded
-  componentDidMount() {
-    this.fetchCats();
+  toggleShowAddCat = () => {
+    this.setState({
+      showAddCat: !this.state.showAddCat,
+    });
+  }
+
+  // Run fetch when component updates (e.g. from auth)
+  // instead of componentDidMount
+  // KEITH MESSED UP THE DEMO STRUCTURE
+  componentDidUpdate() {
+    // Load cats if we haven't
+    if (!this.state.cats)
+      this.fetchCats();
   }
 
   async fetchCats() {
+    const { auth0 } = this.props;
+    if (!auth0.isAuthenticated) {
+      return; // do nothing if not authenticated
+    }
+
+    let claims = await auth0.getIdTokenClaims();
+    console.log(claims);
+    // Grab the raw JWT
+    let jwt = claims.__raw;
+
     let apiUrl = `${SERVER}/cats`;
     try {
       // TODO: filter by location!
-      let results = await axios.get(apiUrl);
+      let results = await axios.get(apiUrl, {
+        headers: {
+          // Use Authorization header for Authentication
+          'Authorization': `Bearer ${jwt}`,
+        },
+      });
       this.setState({ cats: results.data });
     }
     catch (err) {
@@ -76,6 +107,10 @@ class App extends React.Component {
   }
 
   render() {
+    // Destructuring to grab auth0 from props
+    const { auth0 } = this.props;
+    console.log('auth0 in App', auth0);
+
     return (
       <>
         <Router>
@@ -83,12 +118,32 @@ class App extends React.Component {
             <h1>World of Cats</h1>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
+            {auth0.isLoading
+              ? <p>Spinner</p>
+              : auth0.isAuthenticated
+                ? (
+                  <>
+                    Welcome back, {auth0.user.nickname}
+                    <LogoutButton />
+                  </>
+                )
+                : <LoginButton />
+            }
           </nav>
           <Switch>
             <Route exact path="/">
               <h1>Home</h1>
-              <CreateCat onSave={this.handleSave} />
-              {this.state.cats.length > 0 &&
+              {!this.state.showAddCat &&
+                <button onClick={this.toggleShowAddCat}>
+                  Add Cat!
+                </button>
+              }
+              <CreateCat
+                show={this.state.showAddCat}
+                onCancel={this.toggleShowAddCat}
+                onSave={this.handleSave}
+              />
+              {this.state.cats && this.state.cats.length > 0 &&
                 <>
                   <h2>Cats!</h2>
                   {this.state.cats.map(cat => (
@@ -119,4 +174,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+// Wrap App before export in a "higher order component (HOC)"
+// that will give us props.auth0
+export default withAuth0(App);
