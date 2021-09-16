@@ -28,10 +28,25 @@ class App extends React.Component {
   }
 
   async fetchCats() {
+    const { auth0 } = this.props;
+    if (!auth0.isAuthenticated) {
+      return; // do nothing if not authenticated
+    }
+
+    let claims = await auth0.getIdTokenClaims();
+    console.log(claims);
+    // Grab the raw JWT
+    let jwt = claims.__raw;
+
     let apiUrl = `${SERVER}/cats`;
     try {
       // TODO: filter by location!
-      let results = await axios.get(apiUrl);
+      let results = await axios.get(apiUrl, {
+        headers: {
+          // Use Authorization header for Authentication
+          'Authorization': `Bearer ${jwt}`,
+        },
+      });
       this.setState({ cats: results.data });
     }
     catch (err) {
