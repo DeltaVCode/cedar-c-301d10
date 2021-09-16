@@ -10,6 +10,7 @@ import axios from 'axios';
 import Cat from './Cat';
 import CreateCat from './CreateCat';
 import LoginButton from './LoginButton';
+import { withAuth0 } from '@auth0/auth0-react';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
@@ -77,6 +78,10 @@ class App extends React.Component {
   }
 
   render() {
+    // Destructuring to grab auth0 from props
+    const { auth0 } = this.props;
+    console.log('auth0 in App', auth0);
+
     return (
       <>
         <Router>
@@ -84,7 +89,10 @@ class App extends React.Component {
             <h1>World of Cats</h1>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            <LoginButton />
+            {auth0.isAuthenticated
+              ? <>Welcome back, {auth0.user.nickname}</>
+              : <LoginButton />
+            }
           </nav>
           <Switch>
             <Route exact path="/">
@@ -121,4 +129,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+// Wrap App before export in a "higher order component (HOC)"
+// that will give us props.auth0
+export default withAuth0(App);
