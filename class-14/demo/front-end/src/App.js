@@ -16,11 +16,15 @@ import LogoutButton from './LogoutButton';
 const SERVER = process.env.REACT_APP_SERVER;
 
 class App extends React.Component {
-  state = { cats: [] };
+  state = { cats: null };
 
-  // Run fetch as soon as the component has loaded
-  componentDidMount() {
-    this.fetchCats();
+  // Run fetch when component updates (e.g. from auth)
+  // instead of componentDidMount
+  // KEITH MESSED UP THE DEMO STRUCTURE
+  componentDidUpdate() {
+    // Load cats if we haven't
+    if (!this.state.cats)
+      this.fetchCats();
   }
 
   async fetchCats() {
@@ -106,7 +110,7 @@ class App extends React.Component {
             <Route exact path="/">
               <h1>Home</h1>
               <CreateCat onSave={this.handleSave} />
-              {this.state.cats.length > 0 &&
+              {this.state.cats && this.state.cats.length > 0 &&
                 <>
                   <h2>Cats!</h2>
                   {this.state.cats.map(cat => (
