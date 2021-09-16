@@ -11,6 +11,7 @@ import Cat from './Cat';
 import CreateCat from './CreateCat';
 import LoginButton from './LoginButton';
 import { withAuth0 } from '@auth0/auth0-react';
+import LogoutButton from './LogoutButton';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
@@ -89,9 +90,16 @@ class App extends React.Component {
             <h1>World of Cats</h1>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            {auth0.isAuthenticated
-              ? <>Welcome back, {auth0.user.nickname}</>
-              : <LoginButton />
+            {auth0.isLoading
+              ? <p>Spinner</p>
+              : auth0.isAuthenticated
+                ? (
+                  <>
+                    Welcome back, {auth0.user.nickname}
+                    <LogoutButton />
+                  </>
+                )
+                : <LoginButton />
             }
           </nav>
           <Switch>
