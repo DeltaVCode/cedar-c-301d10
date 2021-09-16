@@ -1,6 +1,37 @@
 const express = require('express');
 require('dotenv').config();
 
+// Authentication boilerplate
+const jwt = require('jsonwebtoken');
+const jwksClient = require('jwks-rsa');
+
+const client = jwksClient({
+  // Ideally this comes from .env
+  jwksUri: 'https://dev-txxoephp.us.auth0.com/.well-known/jwks.json',
+});
+
+const { promisify } = require('util');
+// Convert to work with await
+const verify = promisify(jwt.verify);
+
+function getKey(header, callback) {
+  // stretch goal: promisify getSigningKey, too
+  client.getSigningKey(header.kid, function (err, key) {
+    if (err) return callback(err);
+
+    const signingKey = key.publicKey || key.rsaPublicKey;
+    callback(null, signingKey);
+  });
+}
+
+async function verifyUser(authorization) {
+  if (!authorization) return null;
+  let token = authorization.split(' ')[1];
+
+  return await verify(token, getKey, {});
+}
+
+// Connect to Mongoose
 const mongoose = require('mongoose');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -22,6 +53,17 @@ app.use(express.json());
 
 // Route handlers
 app.get('/cats', async (req, res) => {
+  const { authorization } = req.headers;
+
+  // Reject with Unauthorized if not authenticated
+  let user = await verifyUser(authorization);
+  if (!user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // user.email exists!
+
   const location = req.query.location;
 
   const findQuery = {};
