@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import Cat from './Cat';
 import CreateCat from './CreateCat';
+import LoginButton from './LoginButton';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
@@ -83,6 +84,7 @@ class App extends React.Component {
             <h1>World of Cats</h1>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
+            <LoginButton />
           </nav>
           <Switch>
             <Route exact path="/">
